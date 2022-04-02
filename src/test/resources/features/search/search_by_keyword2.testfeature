@@ -1,0 +1,7 @@
+Feature: Application Login
+
+  Scenario: User logs in to the application
+    Given user enter valid "userName" and password ""
+    When he looks up "Cucumber"
+    Then he should see information about "Cucumber"
+
