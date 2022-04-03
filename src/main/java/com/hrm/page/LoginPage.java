@@ -1,5 +1,7 @@
 package com.hrm.page;
 
+import java.util.concurrent.TimeUnit;
+
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
@@ -15,6 +17,8 @@ public class LoginPage extends PageObject {
 	WebElementFacade txtPassword;
 	@FindBy(id = "btnLogin")
 	WebElementFacade btnLogin;
+	@FindBy(xpath = "//span[@id='spanMessage'][text()='Invalid credentials']")
+	WebElementFacade lblLoginErr;
 
 	@WhenPageOpens
 	public void waitUntilTitleAppears() {
@@ -25,7 +29,10 @@ public class LoginPage extends PageObject {
 		txtUsername.type(username);
 		txtPassword.type(password);
 		btnLogin.click();
+	}
 
+	public boolean isCredentialError() {
+		return lblLoginErr.withTimeoutOf(2, TimeUnit.SECONDS).isVisible();
 	}
 
 }
