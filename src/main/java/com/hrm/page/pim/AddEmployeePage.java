@@ -51,4 +51,11 @@ public class AddEmployeePage extends BasePage {
 		repassword.type(employee.getUser().getPassword());
 		btnSave.click();
 	}
+
+	public void addNewEmployeeWithoutLoginDetails(Employee employee) {
+		firstName.type(employee.getFirstName());
+		lastName.type(employee.getLastName());
+		employee.setEmpId(employeeId.getValue());
+		btnSave.click();
+	}
 }

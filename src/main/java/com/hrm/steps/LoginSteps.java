@@ -4,17 +4,21 @@ import java.security.InvalidParameterException;
 
 import com.hrm.datagen.EmployeeDatagen;
 import com.hrm.entity.Employee;
+import com.hrm.entity.User;
 import com.hrm.enums.UserRole;
-import com.hrm.page.HomePage;
+import com.hrm.page.DashboardPage;
 import com.hrm.page.LoginPage;
 import com.hrm.page.pim.AddEmployeePage;
 import com.hrm.utils.ConfigUtils;
 
+import net.thucydides.core.annotations.Step;
+
 public class LoginSteps {
 	LoginPage loginPage;
-	HomePage homePage;
+	DashboardPage dashboardPage;
 	AddEmployeePage addEmployeePage;
 
+	@Step
 	public void loginAsUser(UserRole userRole) {
 		String username = "", password = "";
 		switch (userRole) {
@@ -30,7 +34,7 @@ public class LoginSteps {
 			throw new InvalidParameterException();
 		}
 		loginPage.enterLoginCredentials(username, password);
-		if (loginPage.isCredentialError() && userRole == UserRole.ESS) {
+		if (userRole == UserRole.ESS && loginPage.isCredentialError()) {
 			loginAsUser(UserRole.Admin);
 			addEmployeePage.navigateToPage();
 			Employee employee = new EmployeeDatagen().createEmployeeWithUser(new Employee());
@@ -40,15 +44,31 @@ public class LoginSteps {
 			addEmployeePage.logout();
 			loginPage.enterLoginCredentials(username, password);
 		}
-		homePage.shouldBeDisplayed();
+		dashboardPage.shouldBeDisplayed();
 	}
 
+	@Step
+	public void loginAsUser(User user) {
+		String username = user.getUsername();
+		String password = user.getPassword();
+		loginPage.enterLoginCredentials(username, password);
+		dashboardPage.shouldBeDisplayed();
+	}
+
+	@Step
 	public void openLoginPage() {
 		loginPage.open();
+		loginPage.shouldBeDisplayed();
 	}
 
+	@Step
 	public void checkMenusInHomePage(UserRole userRole) {
-		homePage.checkForMenusDisplayed(userRole);
+		dashboardPage.checkForMenusDisplayed(userRole);
+	}
+
+	@Step
+	public void loginPageShoudBeDisplayed() {
+		loginPage.shouldBeDisplayed();
 	}
 
 }

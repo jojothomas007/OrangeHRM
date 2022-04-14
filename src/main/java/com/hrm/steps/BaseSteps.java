@@ -1,43 +1,38 @@
 package com.hrm.steps;
 
-import java.security.InvalidParameterException;
-
 import com.hrm.enums.UserRole;
-import com.hrm.page.HomePage;
+import com.hrm.page.DashboardPage;
 import com.hrm.page.LoginPage;
-import com.hrm.utils.ConfigUtils;
+
+import net.thucydides.core.annotations.Step;
 
 public class BaseSteps {
 	LoginPage loginPage;
-	HomePage homePage;
+	DashboardPage homePage;
 
-	public void loginAsUser(UserRole userRole) {
-		String username = "", password = "";
-		switch (userRole) {
-		case Admin:
-			username = ConfigUtils.getAdminUsername();
-			password = ConfigUtils.getAdminUserPassword();
-			break;
-		case ESS:
-			username = ConfigUtils.getEssUsername();
-			password = ConfigUtils.getEssUserPassword();
-			break;
-		default:
-			throw new InvalidParameterException();
-		}
-		loginPage.enterLoginCredentials(username, password);
-		if (loginPage.isCredentialError()) {
-			loginAsUser(UserRole.Admin);
-		}
-		homePage.shouldBeDisplayed();
+	@Step
+	public void logout() {
+		homePage.logout();
 	}
 
-	public void openLoginPage() {
-		loginPage.open();
-	}
-
-	public void checkMenusInHomePage(UserRole userRole) {
+	@Step
+	public void checkAvailableMenuOptions(UserRole userRole) {
 		homePage.checkForMenusDisplayed(userRole);
+	}
+
+	@Step("{0}")
+	public void postInformationInReport(String logString0) {
+
+	}
+
+	@Step("{0} {1}")
+	public void postInformationInReport(String logString0, String logString1) {
+
+	}
+
+	@Step("{0} {1} {2}")
+	public void postInformationInReport(String logString0, String logString1, String logString2) {
+
 	}
 
 }

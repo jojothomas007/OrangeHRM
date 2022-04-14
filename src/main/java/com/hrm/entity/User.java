@@ -1,9 +1,12 @@
 package com.hrm.entity;
 
+import com.hrm.enums.UserRole;
+
 public class User {
 	String username;
 	String password;
 	String status;
+	UserRole userRole;
 
 	public String getUsername() {
 		return username;
@@ -27,6 +30,14 @@ public class User {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 }

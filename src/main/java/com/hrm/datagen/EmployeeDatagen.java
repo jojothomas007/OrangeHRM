@@ -5,16 +5,21 @@ import com.hrm.entity.User;
 
 public class EmployeeDatagen {
 	public Employee createEmployeeWithUser(Employee employee) {
+		employee = createEmployeeWithoutUser(employee);
+		User user = new User();
+		user.setUsername(employee.getFirstName() + employee.getLastName());
+		user.setPassword(employee.getFirstName() + employee.getLastName());
+		user.setStatus("Active");
+		employee.setUser(user);
+		return employee;
+	}
+
+	public Employee createEmployeeWithoutUser(Employee employee) {
 		employee.setEmpId("");
 		String firstname = DatagenUtils.getname().firstName();
 		String lastname = DatagenUtils.getname().lastName();
 		employee.setFirstName(firstname);
 		employee.setLastName(lastname);
-		User user = new User();
-		user.setUsername(firstname + lastname);
-		user.setPassword(firstname + lastname);
-		user.setStatus("Active");
-		employee.setUser(user);
 		return employee;
 	}
 }

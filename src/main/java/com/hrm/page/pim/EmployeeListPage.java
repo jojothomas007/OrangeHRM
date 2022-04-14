@@ -1,5 +1,7 @@
 package com.hrm.page.pim;
 
+import java.util.Random;
+
 import com.hrm.entity.Employee;
 import com.hrm.enums.MenuItems;
 import com.hrm.page.BasePage;
@@ -31,4 +33,14 @@ public class EmployeeListPage extends BasePage {
 		empIdsearch.type(employee.getEmpId());
 		btnsearch.click();
 	}
+
+	public Employee getARandomEmployee(Employee employee) {
+		int rowNum = new Random().nextInt(20) + 3;
+		WebElementFacade empRow = $("//tr[" + rowNum + "]");
+		employee.setEmpId(empRow.thenFind(".//td[2]").getText());
+		employee.setFirstName(empRow.thenFind(".//td[3]").getText());
+		employee.setLastName(empRow.thenFind(".//td[4]").getText());
+		return employee;
+	}
+
 }

@@ -6,6 +6,6 @@ import io.cucumber.junit.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
 
 @RunWith(CucumberWithSerenity.class)
-@CucumberOptions(plugin = { "pretty" }, features = "src/test/resources/features")
+@CucumberOptions(plugin = { "pretty" }, features = "src/test/resources/features/temp.feature")
 public class CucumberTestSuite {
 }

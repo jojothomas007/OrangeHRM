@@ -1,7 +1,11 @@
 package starter.stepdefinitions.admin;
 
+import com.hrm.datagen.UserDatagen;
+import com.hrm.entity.Employee;
+import com.hrm.entity.User;
 import com.hrm.enums.UserRole;
 import com.hrm.steps.LoginSteps;
+import com.hrm.steps.admin.UserManagementSteps;
 
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.Given;
@@ -12,6 +16,12 @@ import net.thucydides.core.annotations.Steps;
 public class UserManagementStepDefinitions {
 	@Steps
 	LoginSteps loginSteps;
+	@Steps
+	UserManagementSteps userManagementSteps;
+	@Steps(shared = true)
+	Employee employee;
+	@Steps(shared = true)
+	User user;
 
 	@ParameterType(".*")
 	public UserRole userRole(String userRole) {
@@ -32,13 +42,18 @@ public class UserManagementStepDefinitions {
 
 	@When("the admin user adds a ESS user role to the employee")
 	public void the_admin_user_adds_a_ess_user_role_to_the_employee() {
-		// Write code here that turns the phrase above into concrete actions
-		throw new io.cucumber.java.PendingException();
+		new UserDatagen().addUser(employee);
+		userManagementSteps.addNewUser(employee);
+	}
+
+	@When("the current user logs out from OrangeHRM")
+	public void the_current_user_logs_out_from_orange_hrm() {
+		userManagementSteps.logout();
+		loginSteps.loginPageShoudBeDisplayed();
 	}
 
 	@Then("the new user should be able to login to the application")
 	public void the_new_user_should_be_able_to_login_to_the_application() {
-		// Write code here that turns the phrase above into concrete actions
-		throw new io.cucumber.java.PendingException();
+		loginSteps.loginAsUser(employee.getUser());
 	}
 }

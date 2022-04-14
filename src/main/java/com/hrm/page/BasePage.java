@@ -2,6 +2,8 @@ package com.hrm.page;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Keys;
+
 import com.hrm.enums.MenuItems;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
@@ -30,7 +32,7 @@ public abstract class BasePage extends PageObject {
 		 * explicit waiting is not advised. Keeping this to showcase for the assignment.
 		 */
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -46,12 +48,17 @@ public abstract class BasePage extends PageObject {
 			withAction().moveToElement(element(menuXpath)).moveToElement(element(getSecondLvlMenuXpath)).click().build()
 					.perform();
 		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 
 	public void logout() {
 		userWelcome.click();
-		logout.withTimeoutOf(1, TimeUnit.SECONDS).click();
+		logout.withTimeoutOf(1, TimeUnit.SECONDS).waitUntilClickable().click();
 
 	}
 
@@ -61,4 +68,11 @@ public abstract class BasePage extends PageObject {
 
 	protected abstract MenuItems getPageMenu();
 
+	public WebElementFacade searchAndEnter(final WebElementFacade element, String value) {
+		element.sendKeys(value);
+		getClock().pauseFor(1000);
+		element.sendKeys(Keys.ENTER);
+//		$("//div[@class='ac_results']//li[.='" + empFullname + "']").click();
+		return element;
+	}
 }

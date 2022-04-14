@@ -8,7 +8,7 @@ import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.annotations.WhenPageOpens;
 
-@DefaultUrl("https://opensource-demo.orangehrmlive.com")
+@DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/auth/login")
 public class LoginPage extends PageObject {
 
 	@FindBy(id = "txtUsername")

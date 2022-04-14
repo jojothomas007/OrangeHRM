@@ -14,16 +14,16 @@ import com.hrm.enums.UserRole;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.ListOfWebElementFacades;
 import net.serenitybdd.core.pages.WebElementFacade;
+import net.thucydides.core.annotations.At;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.annotations.WhenPageOpens;
 
+@At(urls = { "#HOST/index.php/dashboard" })
 @DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/dashboard")
-public class HomePage extends BasePage {
+public class DashboardPage extends BasePage {
 
 	@FindBy(id = "div_graph_display_emp_distribution")
 	WebElementFacade graph;
-	@FindBy(xpath = "//li[contains(@class,'main-menu-first-level-list-item')]/a/b")
-	WebElementFacade menu;
 
 	@Override
 	protected MenuItems getPageMenu() {
@@ -54,4 +54,5 @@ public class HomePage extends BasePage {
 		assertThat(displayedMainMenus).as("Displayed Main menu").hasSameElementsAs(mainMenus);
 
 	}
+
 }

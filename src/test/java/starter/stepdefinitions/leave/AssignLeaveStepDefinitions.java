@@ -1,19 +1,30 @@
 package starter.stepdefinitions.leave;
 
-import io.cucumber.java.en.Then;
+import java.util.Random;
+
+import com.hrm.entity.Employee;
+import com.hrm.entity.LeaveEntitlement;
+import com.hrm.steps.leave.AssignLeaveSteps;
+import com.hrm.steps.leave.LeaveEntitlementSteps;
+
 import io.cucumber.java.en.When;
+import net.thucydides.core.annotations.Steps;
 
 public class AssignLeaveStepDefinitions {
+	@Steps
+	AssignLeaveSteps assignLeaveSteps;
+	@Steps
+	LeaveEntitlementSteps leaveEntitlementSteps;
+	@Steps(shared = true)
+	Employee employee;
+	String[] saa = new String[2];
 
 	@When("the admin user assign leave to a user")
 	public void the_admin_user_assign_leave_to_a_user() {
-		// Write code here that turns the phrase above into concrete actions
-		throw new io.cucumber.java.PendingException();
+		LeaveEntitlement aLeaveEntitlement = leaveEntitlementSteps.getRandomLeaveEntitlement(employee);
+		int intLeaveBalance = Math.round(aLeaveEntitlement.getBalance());
+		int numLeaves = new Random().nextInt(intLeaveBalance) + 1;
+		assignLeaveSteps.assignLeaves(employee, aLeaveEntitlement.getType(), numLeaves);
 	}
 
-	@Then("the leave balance should get updated correctly for the user")
-	public void the_leave_balance_should_get_updated_correctly_for_the_user() {
-		// Write code here that turns the phrase above into concrete actions
-		throw new io.cucumber.java.PendingException();
-	}
 }
