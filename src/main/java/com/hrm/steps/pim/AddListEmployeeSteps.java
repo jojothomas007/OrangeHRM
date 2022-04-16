@@ -27,7 +27,7 @@ public class AddListEmployeeSteps extends BaseSteps {
 		employeeListPage.searchEmployeeWithId(employee);
 	}
 
-	@Step
+	@Step("Get a Random Employee")
 	public Employee getARandomEmployee(Employee employee) {
 		employeeListPage.navigateToPage();
 		employeeListPage.getARandomEmployee(employee);

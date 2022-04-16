@@ -8,7 +8,7 @@ import java.util.Random;
 import org.apache.commons.collections.map.HashedMap;
 
 import com.hrm.entity.Employee;
-import com.hrm.entity.LeaveEntitlement;
+import com.hrm.entity.Leave;
 import com.hrm.page.admin.AddUserPage;
 import com.hrm.page.admin.SystemUsersPage;
 import com.hrm.page.leave.AddLeaveEntitlementPage;
@@ -32,32 +32,32 @@ public class LeaveEntitlementSteps extends BaseSteps {
 	}
 
 	@Step("Add leave Entitlement for Employee {1} {2}")
-	public void addEntitlement(Employee employee, String leaveType, float numleaves) {
+	public void addEntitlement(Employee employee, String leaveType, float numleaveEntitlements) {
 		addLeaveEntitlementPage.navigateToPage();
-		addLeaveEntitlementPage.addLeaves(employee, leaveType, numleaves);
+		addLeaveEntitlementPage.addLeaves(employee, leaveType, numleaveEntitlements);
 		employeeEntitlementsPage.shouldBeDisplayed();
-		LeaveEntitlement leaveEntitlement;
+		Leave leaveEntitlement;
 		if (employee.getLeaves().containsKey(leaveType)) {
 			leaveEntitlement = employee.getLeaves().get(leaveType);
-			leaveEntitlement.setBalance(leaveEntitlement.getBalance() + numleaves);
+			leaveEntitlement.setEntitlement(leaveEntitlement.getEntitlement() + numleaveEntitlements);
 		} else {
-			leaveEntitlement = new LeaveEntitlement(leaveType, numleaves);
+			leaveEntitlement = new Leave(leaveType, numleaveEntitlements, null);
 		}
 		employee.getLeaves().put(leaveType, leaveEntitlement);
 	}
 
 	@Step("Verify Employee Leave Entitlement")
 	public void verifyEmployeeLeaveEntitlement(Employee employee) {
-		Map<String, LeaveEntitlement> mapLeaveEntitlement = employee.getLeaves();
+		Map<String, Leave> mapLeaveEntitlement = employee.getLeaves();
 		Map<String, Float> expleaveEntitlements = new HashedMap();
 		for (String leaveType : mapLeaveEntitlement.keySet()) {
-			expleaveEntitlements.put(leaveType, mapLeaveEntitlement.get(leaveType).getBalance());
+			expleaveEntitlements.put(leaveType, mapLeaveEntitlement.get(leaveType).getEntitlement());
 		}
 		employeeEntitlementsPage.navigateToPage();
 		mapLeaveEntitlement = employeeEntitlementsPage.getLeaveEntitlements(employee);
 		Map<String, Float> actualleaveEntitlements = new HashedMap();
 		for (String leaveType : mapLeaveEntitlement.keySet()) {
-			actualleaveEntitlements.put(leaveType, mapLeaveEntitlement.get(leaveType).getBalance());
+			actualleaveEntitlements.put(leaveType, mapLeaveEntitlement.get(leaveType).getEntitlement());
 		}
 		assertThat(actualleaveEntitlements).as("Leave Entitlement").containsAllEntriesOf(expleaveEntitlements);
 		assertThat(actualleaveEntitlements.keySet()).as("Leave Entitlement")
@@ -65,11 +65,11 @@ public class LeaveEntitlementSteps extends BaseSteps {
 
 	}
 
-	@Step
-	public LeaveEntitlement getRandomLeaveEntitlement(Employee employee) {
-		Map<String, LeaveEntitlement> leaves = employee.getLeaves();
+	@Step("Get random leave entitlement")
+	public Leave getRandomLeaveEntitlement(Employee employee) {
+		Map<String, Leave> leaves = employee.getLeaves();
 		int num = new Random().nextInt(leaves.size());
-		LeaveEntitlement aLeaveEntitlement = (LeaveEntitlement) leaves.values().toArray()[num];
+		Leave aLeaveEntitlement = (Leave) leaves.values().toArray()[num];
 		return aLeaveEntitlement;
 
 	}

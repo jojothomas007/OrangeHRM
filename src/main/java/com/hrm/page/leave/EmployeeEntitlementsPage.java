@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.collections.map.HashedMap;
 
 import com.hrm.entity.Employee;
-import com.hrm.entity.LeaveEntitlement;
+import com.hrm.entity.Leave;
 import com.hrm.enums.MenuItems;
 import com.hrm.page.BasePage;
 
@@ -18,7 +18,7 @@ import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.annotations.WhenPageOpens;
 
 @At(urls = { "#HOST/index.php/leave/viewLeaveEntitlements.*" })
-@DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/leave/addLeaveEntitlement")
+@DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/leave/viewLeaveEntitlements")
 public class EmployeeEntitlementsPage extends BasePage {
 
 	@FindBy(id = "entitlements_employee_empName")
@@ -43,7 +43,7 @@ public class EmployeeEntitlementsPage extends BasePage {
 		waitABit(2000);
 	}
 
-	public Map<String, LeaveEntitlement> getLeaveEntitlements(Employee employee) {
+	public Map<String, Leave> getLeaveEntitlements(Employee employee) {
 		String empFullname = employee.getFirstName() + " " + employee.getLastName();
 		searchAndEnter(empName, empFullname);
 		btnSearch.click();
@@ -51,12 +51,12 @@ public class EmployeeEntitlementsPage extends BasePage {
 			employee.setLeaves(new HashedMap());
 			return employee.getLeaves();
 		}
-		Map<String, LeaveEntitlement> leaveEntitlements = employee.getLeaves();
+		Map<String, Leave> leaveEntitlements = employee.getLeaves();
 		ListOfWebElementFacades tableRows = resultTable.thenFindAll("./tbody/tr");
 		for (WebElementFacade tableRow : tableRows) {
 			String leaveType = tableRow.thenFind("./td[2]").getText();
-			Float leaveBalance = Float.parseFloat(tableRow.thenFind("./td[6]/a").getText());
-			leaveEntitlements.put(leaveType, new LeaveEntitlement(leaveType, leaveBalance));
+			Float leaveEntitlementFloat = Float.parseFloat(tableRow.thenFind("./td[6]/a").getText());
+			leaveEntitlements.put(leaveType, new Leave(leaveType, leaveEntitlementFloat, null));
 		}
 		return leaveEntitlements;
 	}

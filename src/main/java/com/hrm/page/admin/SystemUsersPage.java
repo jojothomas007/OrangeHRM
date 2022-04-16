@@ -1,5 +1,7 @@
 package com.hrm.page.admin;
 
+import org.openqa.selenium.By;
+
 import com.hrm.enums.MenuItems;
 import com.hrm.page.BasePage;
 
@@ -26,6 +28,31 @@ public class SystemUsersPage extends BasePage {
 
 	public void addUser() {
 		btnAdd.click();
+	}
+
+	public int getTotalRows() {
+		int totalRowNum = getDriver().findElements(By.cssSelector("#resultTable > tbody > tr")).size();
+		return totalRowNum;
+	}
+
+	public void printUserDetailsUsingCSS(int totalRowNum) {
+		for (int rowIndex = 1; rowIndex <= totalRowNum; rowIndex++) {
+			for (int colIndex = 1; colIndex < 4; colIndex++) {
+				System.out.println(getDriver().findElement(By.cssSelector(
+						"#resultTable > tbody > tr:nth-child(" + rowIndex + ") > td:nth-child(" + colIndex + ")"))
+						.getText());
+			}
+		}
+	}
+
+	public void printUserDetailsUsingXpath(int totalRowNum) {
+		for (int rowIndex = 1; rowIndex <= totalRowNum; rowIndex++) {
+			for (int colIndex = 1; colIndex < 4; colIndex++) {
+				System.out.println(getDriver()
+						.findElement(By.xpath("//*[@id='resultTable']/tbody/tr[" + rowIndex + "]/td[" + colIndex + "]"))
+						.getText());
+			}
+		}
 	}
 
 }

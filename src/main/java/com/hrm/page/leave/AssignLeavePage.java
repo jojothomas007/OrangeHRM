@@ -1,10 +1,9 @@
 package com.hrm.page.leave;
 
-import java.util.concurrent.TimeUnit;
-
 import com.hrm.entity.Employee;
 import com.hrm.enums.MenuItems;
 import com.hrm.page.BasePage;
+import com.hrm.utils.CommonUtils;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
@@ -14,20 +13,20 @@ import net.thucydides.core.annotations.WhenPageOpens;
 @DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/leave/addLeaveEntitlement")
 public class AssignLeavePage extends BasePage {
 
-	@FindBy(id = "entitlements_employee_empName")
+	@FindBy(id = "assignleave_txtEmployee_empName")
 	WebElementFacade empName;
-	@FindBy(id = "entitlements_leave_type")
+	@FindBy(id = "assignleave_txtLeaveType")
 	WebElementFacade leaveType;
-	@FindBy(id = "entitlements_entitlement")
-	WebElementFacade entitlement;
-	@FindBy(id = "btnSave")
-	WebElementFacade btnSave;
-	@FindBy(id = "dialogUpdateEntitlementConfirmBtn")
-	WebElementFacade btnConfirmBtn;
+	@FindBy(id = "assignleave_txtFromDate")
+	WebElementFacade fromDate;
+	@FindBy(id = "assignleave_txtToDate")
+	WebElementFacade toDate;
+	@FindBy(id = "assignBtn")
+	WebElementFacade btnAssign;
 
 	@Override
 	protected MenuItems getPageMenu() {
-		return MenuItems.LEAVE_ADD_ENTITLEMENTS;
+		return MenuItems.LEAVE_ASSIGN;
 	}
 
 	@WhenPageOpens
@@ -36,15 +35,29 @@ public class AssignLeavePage extends BasePage {
 		waitABit(2000);
 	}
 
-	public void assignLeaves(Employee employee, String strleaveType, Integer numleaves) {
+	public void assignRandomLeaves(Employee employee, String strleaveType, Integer numleaves) {
 		String empFullname = employee.getFirstName() + " " + employee.getLastName();
 		searchAndEnter(empName, empFullname);
 		leaveType.selectByVisibleText(strleaveType);
-		entitlement.type(numleaves.toString());
-		btnSave.click();
-		if (true == btnConfirmBtn.withTimeoutOf(2, TimeUnit.SECONDS).isVisible()) {
-			btnConfirmBtn.click();
-		}
+//		click calendar element
+		fromDate.click();
+		waitABit(500);
+		WebElementFacade calendar = $("//div[@id='ui-datepicker-div']");
+//		select random month
+		calendar.thenFind(".//select[@class='ui-datepicker-month']").selectByIndex(CommonUtils.getRandomInteger(12));
+		waitABit(500);
+		// select random from date and to date value
+		int fromDayIndex = CommonUtils.getRandomInteger(10) + 1;
+		String strFromDate = calendar.thenFind("(.//td[@class=' '])[" + fromDayIndex + "]").getText();
+		int toDayIndex = fromDayIndex + numleaves - 1;
+		String strToDate = calendar.thenFind("(.//td[@class=' '])[" + toDayIndex + "]").getText();
+		calendar.thenFind(".//td[.='" + strFromDate + "']").click();
+//		click calendar element
+		toDate.click();
+		waitABit(500);
+		calendar = $("//div[@id='ui-datepicker-div']");
+		calendar.thenFind(".//td[.='" + strToDate + "']").click();
+		btnAssign.click();
 	}
 
 }

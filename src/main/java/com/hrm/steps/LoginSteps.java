@@ -8,6 +8,7 @@ import com.hrm.entity.User;
 import com.hrm.enums.UserRole;
 import com.hrm.page.DashboardPage;
 import com.hrm.page.LoginPage;
+import com.hrm.page.admin.LocalizationPage;
 import com.hrm.page.pim.AddEmployeePage;
 import com.hrm.utils.ConfigUtils;
 
@@ -17,6 +18,7 @@ public class LoginSteps {
 	LoginPage loginPage;
 	DashboardPage dashboardPage;
 	AddEmployeePage addEmployeePage;
+	LocalizationPage localizationPage;
 
 	@Step
 	public void loginAsUser(UserRole userRole) {
@@ -45,6 +47,8 @@ public class LoginSteps {
 			loginPage.enterLoginCredentials(username, password);
 		}
 		dashboardPage.shouldBeDisplayed();
+		localizationPage.open();
+		localizationPage.setDefaultLanguage();
 	}
 
 	@Step
@@ -53,6 +57,8 @@ public class LoginSteps {
 		String password = user.getPassword();
 		loginPage.enterLoginCredentials(username, password);
 		dashboardPage.shouldBeDisplayed();
+		localizationPage.open();
+		localizationPage.setDefaultLanguage();
 	}
 
 	@Step

@@ -22,7 +22,7 @@ public class EntitlementsStepDefinitions {
 	@When("the admin user add new leave entitlement")
 	public void the_admin_user_add_new_leave_entitlement() {
 		String leaveType = configureLeaveSteps.getRandomLeaveType();
-		int leaveAddition = new Random().nextInt(5);
+		int leaveAddition = new Random().nextInt(5) + 1;
 		leaveEntitlementSteps.addEntitlement(employee, leaveType, leaveAddition);
 	}
 

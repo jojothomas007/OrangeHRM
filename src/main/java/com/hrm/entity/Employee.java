@@ -9,7 +9,7 @@ public class Employee {
 	String lastName;
 	String empId;
 	User user;
-	Map<String, LeaveEntitlement> leaves = new HashedMap();
+	Map<String, Leave> leaves = new HashedMap();
 
 	public String getFirstName() {
 		return firstName;
@@ -43,11 +43,11 @@ public class Employee {
 		this.user = user;
 	}
 
-	public Map<String, LeaveEntitlement> getLeaves() {
+	public Map<String, Leave> getLeaves() {
 		return leaves;
 	}
 
-	public void setLeaves(Map<String, LeaveEntitlement> leaves) {
+	public void setLeaves(Map<String, Leave> leaves) {
 		this.leaves = leaves;
 	}
 

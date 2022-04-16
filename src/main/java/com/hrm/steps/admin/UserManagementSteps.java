@@ -20,4 +20,19 @@ public class UserManagementSteps extends BaseSteps {
 		addUserPage.enterUserDetails(employee);
 	}
 
+	public int getTotalRows() {
+		systemUsersPage.navigateToPage();
+		int totalRowNum = systemUsersPage.getTotalRows();
+		return totalRowNum;
+	}
+
+	@Step
+	public void identifyUserDetailsUsingCSS(int totalRowNum) {
+		systemUsersPage.printUserDetailsUsingCSS(totalRowNum);
+	}
+
+	@Step
+	public void identifyUserDetailsUsingXpath(int totalRowNum) {
+		systemUsersPage.printUserDetailsUsingXpath(totalRowNum);
+	}
 }

@@ -17,14 +17,14 @@ public class AddListEmployeesStepDefinitions {
 	@Steps(shared = true)
 	Employee employee;
 
-	@Given("the user adds a new employee with user role")
-	public void the_user_adds_a_new_employee_with_user_role() {
+	@Given("the user adds a new employee with login details")
+	public void the_user_adds_a_new_employee_with_login_details() {
 		new EmployeeDatagen().createEmployeeWithUser(employee);
 		addListEmployeeSteps.addNewEmployee(employee);
 	}
 
-	@Given("the user adds a new employee without user role")
-	public void the_user_adds_a_new_employee_without_user_role() {
+	@Given("the user adds a new employee without login details")
+	public void the_user_adds_a_new_employee_without_login_details() {
 		new EmployeeDatagen().createEmployeeWithoutUser(employee);
 		addListEmployeeSteps.addNewEmployee(employee);
 	}

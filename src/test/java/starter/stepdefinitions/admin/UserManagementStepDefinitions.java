@@ -56,4 +56,15 @@ public class UserManagementStepDefinitions {
 	public void the_new_user_should_be_able_to_login_to_the_application() {
 		loginSteps.loginAsUser(employee.getUser());
 	}
+
+	@Then("print all user details using xpath and CSS")
+	public void print_all_user_details_using_xpath_and_CSS() {
+		int totalRowNum = userManagementSteps.getTotalRows();
+		System.out.println(String.format("Total Elements to be identified %d", totalRowNum * 4));
+		System.out.println("Elements identified by xpath");
+		userManagementSteps.identifyUserDetailsUsingXpath(totalRowNum);
+		System.out.println("Elements identified by CSS");
+		userManagementSteps.identifyUserDetailsUsingCSS(totalRowNum);
+	}
+
 }

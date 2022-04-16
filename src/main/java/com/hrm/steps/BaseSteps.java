@@ -8,16 +8,16 @@ import net.thucydides.core.annotations.Step;
 
 public class BaseSteps {
 	LoginPage loginPage;
-	DashboardPage homePage;
+	DashboardPage dashboardPage;
 
 	@Step
 	public void logout() {
-		homePage.logout();
+		dashboardPage.logout();
 	}
 
 	@Step
 	public void checkAvailableMenuOptions(UserRole userRole) {
-		homePage.checkForMenusDisplayed(userRole);
+		dashboardPage.checkForMenusDisplayed(userRole);
 	}
 
 	@Step("{0}")

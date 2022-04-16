@@ -1,11 +1,13 @@
 package com.hrm.entity;
 
-public class LeaveEntitlement {
+public class Leave {
 	String type;
+	Float entitlement;
 	Float balance;
 
-	public LeaveEntitlement(String type, Float balance) {
+	public Leave(String type, Float entitlement, Float balance) {
 		this.type = type;
+		this.entitlement = entitlement;
 		this.balance = balance;
 	}
 
@@ -15,6 +17,14 @@ public class LeaveEntitlement {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Float getEntitlement() {
+		return entitlement;
+	}
+
+	public void setEntitlement(Float entitlement) {
+		this.entitlement = entitlement;
 	}
 
 	public Float getBalance() {
