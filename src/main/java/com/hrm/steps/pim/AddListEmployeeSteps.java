@@ -2,6 +2,7 @@ package com.hrm.steps.pim;
 
 import com.hrm.entity.Employee;
 import com.hrm.page.pim.AddEmployeePage;
+import com.hrm.page.pim.EmployeeDetailsPage;
 import com.hrm.page.pim.EmployeeListPage;
 import com.hrm.steps.BaseSteps;
 
@@ -10,6 +11,7 @@ import net.thucydides.core.annotations.Step;
 public class AddListEmployeeSteps extends BaseSteps {
 	AddEmployeePage addEmployeePage;
 	EmployeeListPage employeeListPage;
+	EmployeeDetailsPage employeeDetailsPage;
 
 	@Step
 	public void addNewEmployee(Employee employee) {
@@ -19,6 +21,7 @@ public class AddListEmployeeSteps extends BaseSteps {
 		} else {
 			addEmployeePage.addNewEmployeeWithLoginDetails(employee);
 		}
+		employeeDetailsPage.waitUntilTitleAppears();
 	}
 
 	@Step

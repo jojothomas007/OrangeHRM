@@ -1,5 +1,6 @@
 Feature: User Management
 
+
   Scenario Outline: User logs into the application
     When a user with role '<userRole>' logs in with valid credentials
     Then home page should be displayed according to the '<userRole>'

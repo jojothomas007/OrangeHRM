@@ -40,7 +40,7 @@ public class EmployeeEntitlementsPage extends BasePage {
 	@WhenPageOpens
 	public void waitUntilTitleAppears() {
 		element(empName).withTimeoutOf(2, TimeUnit.SECONDS).waitUntilEnabled();
-		waitABit(2000);
+//		waitABit(1000);
 	}
 
 	public Map<String, Leave> getLeaveEntitlements(Employee employee) {

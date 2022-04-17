@@ -10,6 +10,7 @@ import com.hrm.page.DashboardPage;
 import com.hrm.page.LoginPage;
 import com.hrm.page.admin.LocalizationPage;
 import com.hrm.page.pim.AddEmployeePage;
+import com.hrm.page.pim.EmployeeDetailsPage;
 import com.hrm.utils.ConfigUtils;
 
 import net.thucydides.core.annotations.Step;
@@ -19,6 +20,7 @@ public class LoginSteps {
 	DashboardPage dashboardPage;
 	AddEmployeePage addEmployeePage;
 	LocalizationPage localizationPage;
+	EmployeeDetailsPage employeeDetailsPage;
 
 	@Step
 	public void loginAsUser(UserRole userRole) {
@@ -43,12 +45,15 @@ public class LoginSteps {
 			employee.getUser().setUsername(username);
 			employee.getUser().setPassword(password);
 			addEmployeePage.addNewEmployeeWithLoginDetails(employee);
-			addEmployeePage.logout();
+			employeeDetailsPage.waitUntilTitleAppears();
+			employeeDetailsPage.logout();
 			loginPage.enterLoginCredentials(username, password);
 		}
 		dashboardPage.shouldBeDisplayed();
-		localizationPage.open();
-		localizationPage.setDefaultLanguage();
+		if (userRole == UserRole.Admin) {
+			localizationPage.open();
+			localizationPage.setDefaultLanguage();
+		}
 	}
 
 	@Step
@@ -57,8 +62,10 @@ public class LoginSteps {
 		String password = user.getPassword();
 		loginPage.enterLoginCredentials(username, password);
 		dashboardPage.shouldBeDisplayed();
-		localizationPage.open();
-		localizationPage.setDefaultLanguage();
+		if (user.getUserRole() == UserRole.Admin) {
+			localizationPage.open();
+			localizationPage.setDefaultLanguage();
+		}
 	}
 
 	@Step

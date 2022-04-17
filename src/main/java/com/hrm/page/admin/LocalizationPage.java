@@ -1,5 +1,7 @@
 package com.hrm.page.admin;
 
+import java.util.concurrent.TimeUnit;
+
 import com.hrm.enums.MenuItems;
 import com.hrm.page.BasePage;
 
@@ -25,7 +27,7 @@ public class LocalizationPage extends BasePage {
 
 	@WhenPageOpens
 	public void waitUntilTitleAppears() {
-		element(btnSave).waitUntilVisible();
+		element(btnSave).withTimeoutOf(10, TimeUnit.SECONDS).waitUntilVisible();
 	}
 
 	public void setDefaultLanguage() {

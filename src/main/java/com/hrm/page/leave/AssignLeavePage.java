@@ -58,6 +58,7 @@ public class AssignLeavePage extends BasePage {
 		calendar = $("//div[@id='ui-datepicker-div']");
 		calendar.thenFind(".//td[.='" + strToDate + "']").click();
 		btnAssign.click();
+		waitABit(2000);
 	}
 
 }

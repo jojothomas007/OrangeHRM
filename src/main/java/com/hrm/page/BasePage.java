@@ -42,7 +42,7 @@ public abstract class BasePage extends PageObject {
 		String getSecondLvlMenuXpath = menuXpath + "/..//li/a[.='" + menuItems.getSecondLvlMenu() + "']";
 		if (!menuItems.getThirdLvlMenu().equals("")) {
 			String getThirdLvlMenuXpath = getSecondLvlMenuXpath + "/..//li/a[.='" + menuItems.getThirdLvlMenu() + "']";
-			withAction().moveToElement(element(menuXpath)).moveToElement(element(getSecondLvlMenuXpath))
+			withAction().moveToElement(element(menuXpath)).moveToElement(element(getSecondLvlMenuXpath)).click()
 					.moveToElement(element(getThirdLvlMenuXpath)).click().build().perform();
 		} else {
 			withAction().moveToElement(element(menuXpath)).moveToElement(element(getSecondLvlMenuXpath)).click().build()

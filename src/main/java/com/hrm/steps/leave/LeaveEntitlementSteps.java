@@ -3,7 +3,6 @@ package com.hrm.steps.leave;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
-import java.util.Random;
 
 import org.apache.commons.collections.map.HashedMap;
 
@@ -35,7 +34,7 @@ public class LeaveEntitlementSteps extends BaseSteps {
 	public void addEntitlement(Employee employee, String leaveType, float numleaveEntitlements) {
 		addLeaveEntitlementPage.navigateToPage();
 		addLeaveEntitlementPage.addLeaves(employee, leaveType, numleaveEntitlements);
-		employeeEntitlementsPage.shouldBeDisplayed();
+		employeeEntitlementsPage.waitUntilTitleAppears();
 		Leave leaveEntitlement;
 		if (employee.getLeaves().containsKey(leaveType)) {
 			leaveEntitlement = employee.getLeaves().get(leaveType);
@@ -65,13 +64,15 @@ public class LeaveEntitlementSteps extends BaseSteps {
 
 	}
 
-	@Step("Get random leave entitlement")
-	public Leave getRandomLeaveEntitlement(Employee employee) {
+	@Step("Get leave with non zero balance for the employee")
+	public Leave getLeaveWithNonZeroBalanceForTheEmployee(Employee employee) {
 		Map<String, Leave> leaves = employee.getLeaves();
-		int num = new Random().nextInt(leaves.size());
-		Leave aLeaveEntitlement = (Leave) leaves.values().toArray()[num];
-		return aLeaveEntitlement;
-
+		for (String leave : leaves.keySet()) {
+			if (leaves.get(leave).getBalance() >= 1) {
+				return leaves.get(leave);
+			}
+		}
+		return null;
 	}
 
 }

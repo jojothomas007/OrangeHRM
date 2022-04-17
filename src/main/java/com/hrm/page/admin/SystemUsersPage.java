@@ -1,5 +1,7 @@
 package com.hrm.page.admin;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 
 import com.hrm.enums.MenuItems;
@@ -23,7 +25,7 @@ public class SystemUsersPage extends BasePage {
 
 	@WhenPageOpens
 	public void waitUntilTitleAppears() {
-		element(btnAdd).waitUntilVisible();
+		element(btnAdd).withTimeoutOf(5, TimeUnit.SECONDS).waitUntilVisible();
 	}
 
 	public void addUser() {
@@ -37,21 +39,25 @@ public class SystemUsersPage extends BasePage {
 
 	public void printUserDetailsUsingCSS(int totalRowNum) {
 		for (int rowIndex = 1; rowIndex <= totalRowNum; rowIndex++) {
-			for (int colIndex = 1; colIndex < 4; colIndex++) {
-				System.out.println(getDriver().findElement(By.cssSelector(
+			for (int colIndex = 2; colIndex <= 5; colIndex++) {
+				System.out.print(getDriver().findElement(By.cssSelector(
 						"#resultTable > tbody > tr:nth-child(" + rowIndex + ") > td:nth-child(" + colIndex + ")"))
 						.getText());
+				System.out.print(", ");
 			}
+			System.out.println();
 		}
 	}
 
 	public void printUserDetailsUsingXpath(int totalRowNum) {
 		for (int rowIndex = 1; rowIndex <= totalRowNum; rowIndex++) {
-			for (int colIndex = 1; colIndex < 4; colIndex++) {
-				System.out.println(getDriver()
+			for (int colIndex = 2; colIndex <= 5; colIndex++) {
+				System.out.print(getDriver()
 						.findElement(By.xpath("//*[@id='resultTable']/tbody/tr[" + rowIndex + "]/td[" + colIndex + "]"))
 						.getText());
+				System.out.print(", ");
 			}
+			System.out.println();
 		}
 	}
 

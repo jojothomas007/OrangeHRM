@@ -2,6 +2,8 @@ package com.hrm.datagen;
 
 import java.util.Locale;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.github.javafaker.Address;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
@@ -23,5 +25,11 @@ public class DatagenUtils {
 
 	public static Name getname() {
 		return faker.name();
+	}
+
+	public static String getPassword() {
+		String password = RandomStringUtils.randomAlphanumeric(10) + "!@#$*";
+		password = RandomStringUtils.random(15, password.toCharArray());
+		return password;
 	}
 }

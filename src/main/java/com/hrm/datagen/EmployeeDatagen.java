@@ -8,7 +8,7 @@ public class EmployeeDatagen {
 		employee = createEmployeeWithoutUser(employee);
 		User user = new User();
 		user.setUsername(employee.getFirstName() + employee.getLastName());
-		user.setPassword(employee.getFirstName() + employee.getLastName());
+		user.setPassword(DatagenUtils.getPassword());
 		user.setStatus("Active");
 		employee.setUser(user);
 		return employee;

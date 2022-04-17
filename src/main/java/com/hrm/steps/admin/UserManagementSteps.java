@@ -18,6 +18,7 @@ public class UserManagementSteps extends BaseSteps {
 		systemUsersPage.navigateToPage();
 		systemUsersPage.addUser();
 		addUserPage.enterUserDetails(employee);
+		systemUsersPage.waitUntilTitleAppears();
 	}
 
 	public int getTotalRows() {

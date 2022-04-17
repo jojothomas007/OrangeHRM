@@ -14,7 +14,7 @@ import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.annotations.WhenPageOpens;
 
-@DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/leave/addLeaveEntitlement")
+@DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/leave/viewLeaveBalanceReport")
 public class LeaveReportPage extends BasePage {
 
 	@FindBy(id = "leave_balance_report_type")
@@ -33,12 +33,11 @@ public class LeaveReportPage extends BasePage {
 
 	@WhenPageOpens
 	public void waitUntilTitleAppears() {
-		element(generateFor).waitUntilVisible();
-		waitABit(2000);
+		element(generateFor).withTimeoutOf(2, TimeUnit.SECONDS).waitUntilVisible();
 	}
 
 	public void fetchReportForEmployee(Employee employee) {
-		generateFor.selectByVisibleText("Employee");
+		generateFor.waitUntilEnabled().selectByVisibleText("Employee");
 		String empFullname = employee.getFirstName() + " " + employee.getLastName();
 		searchAndEnter(empName, empFullname);
 		viewBtn.click();

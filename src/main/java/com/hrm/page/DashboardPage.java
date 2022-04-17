@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.InvalidArgumentException;
 
@@ -22,8 +23,8 @@ import net.thucydides.core.annotations.WhenPageOpens;
 @DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/dashboard")
 public class DashboardPage extends BasePage {
 
-	@FindBy(id = "div_graph_display_emp_distribution")
-	WebElementFacade graph;
+	@FindBy(xpath = "//table[@class='quickLaungeContainer']//a/span[text()='My Leave']")
+	WebElementFacade myLeaveQLaunch;
 
 	@Override
 	protected MenuItems getPageMenu() {
@@ -32,7 +33,7 @@ public class DashboardPage extends BasePage {
 
 	@WhenPageOpens
 	public void waitUntilTitleAppears() {
-		element(graph).waitUntilVisible();
+		element(myLeaveQLaunch).withTimeoutOf(5, TimeUnit.SECONDS).waitUntilVisible();
 	}
 
 	public void checkForMenusDisplayed(UserRole userRole) {

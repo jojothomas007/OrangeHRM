@@ -38,7 +38,7 @@ public class AddUserPage extends BasePage {
 
 	public void enterUserDetails(Employee employee) {
 		userRole.selectByVisibleText(employee.getUser().getUserRole().toString());
-		empName.type(employee.getFirstName() + employee.getLastName());
+		empName.type(employee.getFirstName() + " " + employee.getLastName());
 		userName.type(employee.getUser().getUsername());
 		password.type(employee.getUser().getPassword());
 		confirmPassword.type(employee.getUser().getPassword());

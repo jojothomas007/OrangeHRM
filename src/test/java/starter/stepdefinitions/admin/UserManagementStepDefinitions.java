@@ -61,9 +61,9 @@ public class UserManagementStepDefinitions {
 	public void print_all_user_details_using_xpath_and_CSS() {
 		int totalRowNum = userManagementSteps.getTotalRows();
 		System.out.println(String.format("Total Elements to be identified %d", totalRowNum * 4));
-		System.out.println("Elements identified by xpath");
+		System.out.println("***********Elements identified by xpath***********");
 		userManagementSteps.identifyUserDetailsUsingXpath(totalRowNum);
-		System.out.println("Elements identified by CSS");
+		System.out.println("***********Elements identified by CSS***********");
 		userManagementSteps.identifyUserDetailsUsingCSS(totalRowNum);
 	}
 

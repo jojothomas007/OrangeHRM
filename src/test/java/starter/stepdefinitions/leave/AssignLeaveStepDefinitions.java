@@ -20,7 +20,7 @@ public class AssignLeaveStepDefinitions {
 
 	@When("the admin user assign leave to the employee")
 	public void the_admin_user_assign_leave_to_the_employee() {
-		Leave leave = leaveEntitlementSteps.getRandomLeaveEntitlement(employee);
+		Leave leave = leaveEntitlementSteps.getLeaveWithNonZeroBalanceForTheEmployee(employee);
 		int intLeaveBalance = Math.round(leave.getEntitlement());
 		int numLeaves = new Random().nextInt(intLeaveBalance) + 1;
 		assignLeaveSteps.assignLeaves(employee, leave.getType(), numLeaves);
