@@ -1,5 +1,7 @@
 package com.hrm.page.leave;
 
+import java.util.concurrent.TimeUnit;
+
 import com.hrm.entity.Employee;
 import com.hrm.enums.MenuItems;
 import com.hrm.page.BasePage;
@@ -17,6 +19,8 @@ public class AssignLeavePage extends BasePage {
 	WebElementFacade empName;
 	@FindBy(id = "assignleave_txtLeaveType")
 	WebElementFacade leaveType;
+	@FindBy(id = "assignleave_leaveBalance")
+	WebElementFacade leaveBalance;
 	@FindBy(id = "assignleave_txtFromDate")
 	WebElementFacade fromDate;
 	@FindBy(id = "assignleave_txtToDate")
@@ -39,13 +43,16 @@ public class AssignLeavePage extends BasePage {
 		String empFullname = employee.getFirstName() + " " + employee.getLastName();
 		searchAndEnter(empName, empFullname);
 		leaveType.selectByVisibleText(strleaveType);
+		waitABit(200);
+		leaveBalance.withTimeoutOf(5, TimeUnit.SECONDS).findBy("./a");
+//		waitForPresenceOf("//div[@id='assignleave_leaveBalance'/a]", null);
 //		click calendar element
 		fromDate.click();
-		waitABit(500);
+		waitABit(200);
 		WebElementFacade calendar = $("//div[@id='ui-datepicker-div']");
 //		select random month
 		calendar.thenFind(".//select[@class='ui-datepicker-month']").selectByIndex(CommonUtils.getRandomInteger(12));
-		waitABit(500);
+		waitABit(200);
 		// select random from date and to date value
 		int fromDayIndex = CommonUtils.getRandomInteger(10) + 1;
 		String strFromDate = calendar.thenFind("(.//td[@class=' '])[" + fromDayIndex + "]").getText();
@@ -54,9 +61,12 @@ public class AssignLeavePage extends BasePage {
 		calendar.thenFind(".//td[.='" + strFromDate + "']").click();
 //		click calendar element
 		toDate.click();
-		waitABit(500);
+		waitABit(200);
 		calendar = $("//div[@id='ui-datepicker-div']");
 		calendar.thenFind(".//td[.='" + strToDate + "']").click();
+		waitABit(200);
+		leaveBalance.withTimeoutOf(5, TimeUnit.SECONDS).findBy("./a");
+//		waitForPresenceOf("//div[@id='assignleave_leaveBalance'/a]", null);
 		btnAssign.click();
 		waitABit(2000);
 	}

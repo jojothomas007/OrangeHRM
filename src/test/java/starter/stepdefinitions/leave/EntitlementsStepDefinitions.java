@@ -6,6 +6,7 @@ import com.hrm.entity.Employee;
 import com.hrm.steps.leave.ConfigureLeaveSteps;
 import com.hrm.steps.leave.LeaveEntitlementSteps;
 
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -36,4 +37,8 @@ public class EntitlementsStepDefinitions {
 		leaveEntitlementSteps.fetchTheEmployeeLeaveEntitlement(employee);
 	}
 
+	@After
+	public void tidyUp() {
+		leaveEntitlementSteps.logout();
+	}
 }

@@ -1,5 +1,7 @@
 package com.hrm.page.admin;
 
+import java.util.concurrent.TimeUnit;
+
 import com.hrm.entity.Employee;
 import com.hrm.enums.MenuItems;
 import com.hrm.page.BasePage;
@@ -42,7 +44,11 @@ public class AddUserPage extends BasePage {
 		userName.type(employee.getUser().getUsername());
 		password.type(employee.getUser().getPassword());
 		confirmPassword.type(employee.getUser().getPassword());
-		btnSave.click();
+		btnSave.waitUntilClickable().click();
+		WebElementFacade btnSave2 = element("//input[@id='btnSave']");
+		if (btnSave2.withTimeoutOf(2, TimeUnit.SECONDS).isPresent()) {
+			btnSave2.click();
+		}
 	}
 
 }

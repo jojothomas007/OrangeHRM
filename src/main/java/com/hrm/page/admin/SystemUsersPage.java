@@ -9,10 +9,13 @@ import com.hrm.page.BasePage;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
+import net.thucydides.core.annotations.At;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.annotations.WhenPageOpens;
 
-@DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/admin/saveSystemUser")
+@At(urls = { "#HOST/index.php/admin/viewSystemUsers" })
+@DefaultUrl("https://opensource-demo.orangehrmlive.com/index.php/admin/viewSystemUsers")
+
 public class SystemUsersPage extends BasePage {
 
 	@FindBy(id = "btnAdd")
@@ -25,11 +28,12 @@ public class SystemUsersPage extends BasePage {
 
 	@WhenPageOpens
 	public void waitUntilTitleAppears() {
-		element(btnAdd).withTimeoutOf(5, TimeUnit.SECONDS).waitUntilVisible();
+		withTimeoutOf(10, TimeUnit.SECONDS).waitForPresenceOf(By.xpath("//input[@id='btnAdd']"));
+		btnAdd.withTimeoutOf(2, TimeUnit.SECONDS).waitUntilVisible();
 	}
 
 	public void addUser() {
-		btnAdd.click();
+		btnAdd.waitUntilClickable().click();
 	}
 
 	public int getTotalRows() {

@@ -32,21 +32,19 @@ public abstract class BasePage extends PageObject {
 		 * explicit waiting is not advised. Keeping this to showcase for the assignment.
 		 */
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		setPageMenu();
 		String menuXpath = "//div[@id='mainMenu']//li[contains(@class,'first-level')]/a[.='" + menuItems.getMainMenu()
 				+ "']";
+		element(menuXpath).click();
 		String getSecondLvlMenuXpath = menuXpath + "/..//li/a[.='" + menuItems.getSecondLvlMenu() + "']";
+		element(getSecondLvlMenuXpath).withTimeoutOf(10, TimeUnit.SECONDS).waitUntilClickable().click();
 		if (!menuItems.getThirdLvlMenu().equals("")) {
 			String getThirdLvlMenuXpath = getSecondLvlMenuXpath + "/..//li/a[.='" + menuItems.getThirdLvlMenu() + "']";
-			withAction().moveToElement(element(menuXpath)).moveToElement(element(getSecondLvlMenuXpath)).click()
-					.moveToElement(element(getThirdLvlMenuXpath)).click().build().perform();
-		} else {
-			withAction().moveToElement(element(menuXpath)).moveToElement(element(getSecondLvlMenuXpath)).click().build()
-					.perform();
+			element(getThirdLvlMenuXpath).waitUntilClickable().click();
 		}
 		try {
 			Thread.sleep(1000);
@@ -69,10 +67,10 @@ public abstract class BasePage extends PageObject {
 	protected abstract MenuItems getPageMenu();
 
 	public WebElementFacade searchAndEnter(final WebElementFacade element, String value) {
+		element.waitUntilEnabled().clear();
 		element.sendKeys(value);
 		getClock().pauseFor(1000);
 		element.sendKeys(Keys.ENTER);
-//		$("//div[@class='ac_results']//li[.='" + empFullname + "']").click();
 		return element;
 	}
 }

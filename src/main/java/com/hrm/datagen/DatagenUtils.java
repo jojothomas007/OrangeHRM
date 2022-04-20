@@ -28,8 +28,11 @@ public class DatagenUtils {
 	}
 
 	public static String getPassword() {
-		String password = RandomStringUtils.randomAlphanumeric(10) + "!@#$*";
-		password = RandomStringUtils.random(15, password.toCharArray());
+		String password = RandomStringUtils.randomNumeric(4);
+		password = password + RandomStringUtils.randomAlphabetic(4).toUpperCase();
+		password = password + RandomStringUtils.randomAlphabetic(4).toLowerCase();
+		password = password + "!@#$*";
+		password = RandomStringUtils.random(16, password.toCharArray());
 		return password;
 	}
 }

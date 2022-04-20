@@ -9,7 +9,7 @@ public class UserDatagen {
 		User user = new User();
 		user.setUserRole(UserRole.ESS);
 		user.setUsername(employee.getFirstName() + employee.getLastName());
-		user.setPassword(employee.getFirstName() + employee.getLastName());
+		user.setPassword(DatagenUtils.getPassword());
 		user.setStatus("Active");
 		employee.setUser(user);
 		return employee;

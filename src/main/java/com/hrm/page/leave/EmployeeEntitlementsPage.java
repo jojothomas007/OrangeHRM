@@ -40,13 +40,12 @@ public class EmployeeEntitlementsPage extends BasePage {
 	@WhenPageOpens
 	public void waitUntilTitleAppears() {
 		element(empName).withTimeoutOf(2, TimeUnit.SECONDS).waitUntilEnabled();
-//		waitABit(1000);
 	}
 
 	public Map<String, Leave> getLeaveEntitlements(Employee employee) {
 		String empFullname = employee.getFirstName() + " " + employee.getLastName();
 		searchAndEnter(empName, empFullname);
-		btnSearch.click();
+		btnSearch.waitUntilClickable().click();
 		if (noLeaves.withTimeoutOf(2, TimeUnit.SECONDS).isVisible()) {
 			employee.setLeaves(new HashedMap());
 			return employee.getLeaves();
